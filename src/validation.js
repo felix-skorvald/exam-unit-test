@@ -5,9 +5,45 @@
 // 4. refactor as neccessary before you move on to the next
 // 5. repeat
 
-function isCartItem(maybeCartItem) {}
+function isCartItem(maybeCartItem) {
+    if (typeof maybeCartItem !== 'object' || maybeCartItem === null) {
+        return false
+    }
+    else if (typeof maybeCartItem.item !== 'object') {
+        return false
+    }
+    else if (typeof maybeCartItem.amount !== 'number') {
+        return false
+    }
+    else if (typeof maybeCartItem.id !== 'number') {
+        return false
+    }
+    else if (!isProduct(maybeCartItem.item)) {
+        return false
+    }
 
-function isProduct(maybeProduct) {}
+    return true
+}
+
+function isProduct(maybeProduct) {
+
+    if (typeof maybeProduct !== 'object' || maybeProduct === null) {
+        return false
+    }
+    else if (typeof maybeProduct.name !== 'string') {
+        return false
+    }
+    else if (typeof maybeProduct.price !== 'number') {
+        return false
+    }
+    else if (typeof maybeProduct.id !== 'number') {
+        return false
+    }
+
+    return true
+
+
+}
 
 
 export { isCartItem, isProduct }

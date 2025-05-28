@@ -1,5 +1,5 @@
 import { isCartItem, isProduct } from "../validation.js"
-// Examples of a valid product and a valid cart item. You may use these when testing below.
+
 const exampleProduct = {
 	id: 1001,
 	name: 'Badanka',
@@ -12,25 +12,78 @@ const exampleCartObject = {
 	item: exampleProduct
 }
 
-// Group tests using "describe"
-describe('Validation', () => {
+describe('Validation cartObject', () => {
 
-	// Använd en "test" eller "it" (de är synonymer) för varje testfall
-	/* Exempel på syntax:
-	test('beskriv testfallet', () => {
-		// här skriver du testkoden
-		// avsluta alltid med "expect"
-	})
-	*/
+	test("isCartItem borde returnera true med godkändt objekt", () => {
+		const expected = true;
+		const actual = isCartItem(exampleCartObject);
 
-
-	// ---------------------------------------------
-	// Följande testfall ska du implementera. Det är tillåtet att använda Joi. Gör i så fall ett schema för varje sorts objekt du vill kunna validera. Du får även ändra texten och du t.ex. vill skriva på svenska i stället för engelska.
-	// (Ta bort dessa kommentarer när du är klar)
-
+		expect(actual).toBe(expected);
+	});
 	// 1. it returns true for a valid cart object
-	// 2. it returns false for invalid cart objects
 
+	const casesCart1 = [
+		[false, 'inte ett objekt alls'],
+		[false, null],
+		[false, 0]
+	]
+	test.each(casesCart1)('om cartItem inte är ett objekt, returnera då false (expect %s, värde %s)', (expected, input) => {
+		const actual = isCartItem(input)
+		expect(actual).toBe(expected)
+	})
+
+
+	const casesCart2 = [
+		[{}],
+		[{ amount: 1, item: exampleProduct }],
+		[{ id: 2001, item: exampleProduct }],
+		[{ id: 2001, amount: 1 }],
+		[{ id: 2001, amount: 1, item: { name: "Ogiltig produkt" } }],
+		[{ id: 2001, amount: "ett", item: exampleProduct }],
+	]
+	test.each(casesCart2)('om cartItem är ett obejkt men i ogiltigt format, returnera false (%s)', (input) => {
+		expect(isCartItem(input)).toBe(false)
+	})
+
+
+	// 2. it returns false for invalid cart objects
+})
+
+
+
+describe('Validation product', () => {
+
+	test("isProduct borde returnera true med godkänd produkt", () => {
+		const expected = true;
+		const actual = isProduct(exampleProduct);
+
+		expect(actual).toBe(expected);
+	})
 	// 3. it returns true for a valid product
-	// 4. it returns false for invalid cart objects
+
+	const casesProduct1 = [
+		[false, 'inte ett objekt alls'],
+		[false, null],
+		[false, 0]
+	]
+	test.each(casesProduct1)('om product inte är ett objekt, returnera då false (expect %s, värde %s)', (expected, input) => {
+		const actual = isProduct(input)
+		expect(actual).toBe(expected)
+	})
+
+	const casesProduct2 = [
+		[{}],
+		[{ name: "Badanka", price: 500 }],
+		[{ id: 1001, price: 500 }],
+		[{ id: 1001, name: "Badanka" }],
+		[{ id: 1001, name: "Badanka", price: "500kr" }],
+		[{ id: 1001, name: 2222, price: 500 }],
+	]
+	test.each(casesProduct2)('om product är ett obejkt men i ogiltigt format, returnera false (%s)', (input) => {
+		expect(isProduct(input)).toBe(false)
+	})
+
+
+
+	// 4. it returns false for invalid products objects
 })
