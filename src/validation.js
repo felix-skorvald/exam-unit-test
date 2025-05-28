@@ -9,13 +9,13 @@ function isCartItem(maybeCartItem) {
     if (typeof maybeCartItem !== 'object' || maybeCartItem === null) {
         return false
     }
-    else if (typeof maybeCartItem.item !== 'object') {
+    else if (typeof maybeCartItem.item !== 'object' || maybeCartItem.item === null) {
         return false
     }
-    else if (typeof maybeCartItem.amount !== 'number') {
+    else if (typeof maybeCartItem.amount !== 'number' || isNaN(maybeCartItem.amount)) {
         return false
     }
-    else if (typeof maybeCartItem.id !== 'number') {
+    else if (typeof maybeCartItem.id !== 'number' || isNaN(maybeCartItem.id)) {
         return false
     }
     else if (!isProduct(maybeCartItem.item)) {
@@ -33,10 +33,10 @@ function isProduct(maybeProduct) {
     else if (typeof maybeProduct.name !== 'string') {
         return false
     }
-    else if (typeof maybeProduct.price !== 'number') {
+    else if (typeof maybeProduct.price !== 'number' || isNaN(maybeProduct.price) || maybeProduct.price <= 1) {
         return false
     }
-    else if (typeof maybeProduct.id !== 'number') {
+    else if (typeof maybeProduct.id !== 'number' || isNaN(maybeProduct.id)) {
         return false
     }
 
