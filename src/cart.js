@@ -27,20 +27,36 @@ let idCounter = 2002
 // Din kod börjar här
 // Du får en funktion att börja med
 
+function getItem(index) {
+	return (cart[index])
+}
+
 function getCartItemCount() {
-	throw new Error('TODO')
+	return cart.reduce((sum, cartItem) => sum + cartItem.amount, 0)
 }
 
 function addToCart(newItem) {
-	if( !isProduct(newItem) ) {
+	if (!isProduct(newItem)) {
 		return false
 	}
 
-	const cartItem = { id: idCounter, amount: 1, item: newItem }
-	idCounter++
-	cart.push(cartItem)
+	const existing = cart.find(cartItem => cartItem.item.id === newItem.id)
+
+	if (existing) {
+		existing.amount++
+
+	} else {
+		const newCartItem = { id: idCounter, amount: 1, item: newItem }
+		idCounter++
+		cart.push(newCartItem)
+	}
+
+}
+
+function clearCart() {
+	cart = []
 }
 
 
 
-export { getCartItemCount, addToCart }
+export { getCartItemCount, addToCart, clearCart, getItem }
