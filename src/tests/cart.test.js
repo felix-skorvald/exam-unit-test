@@ -46,19 +46,19 @@ describe("getCartItemCount", () => {
 
         expect(actual).toBe(expected);
     });
+    //Denna åker bort
+    // test("getCartItemCount ökar amount om produkten redan finns", () => {
+    //     const product = { id: 1002, name: "Vattenpistol", price: 40 }
+    //     const product2 = { id: 1003, name: "Lavapistol", price: 99 }
 
-    test("getCartItemCount ökar amount om produkten redan finns", () => {
-        const product = { id: 1002, name: "Vattenpistol", price: 40 }
-        const product2 = { id: 1003, name: "Lavapistol", price: 99 }
+    //     addToCart(product)
+    //     addToCart(product)
+    //     addToCart(product2)
+    //     addToCart(product)
 
-        addToCart(product)
-        addToCart(product)
-        addToCart(product2)
-        addToCart(product)
-
-        expect(getCartItemCount()).toBe(4);
-        expect(getItem(0).amount).toBe(3)
-    })
+    //     expect(getCartItemCount()).toBe(4);
+    //     expect(getItem(0).amount).toBe(3)
+    // })
 
 })
 
@@ -80,14 +80,27 @@ describe("addToCart", () => {
 
     test("lägger till flera nya produkter i kundvagnen", () => {
         const itemCountBefore = getCartItemCount();
-        const input = { id: 1002, name: "Vattenpistol", price: 40 };
-        addToCart(input);
-        addToCart(input)
+        const input1 = { id: 1002, name: "Vattenpistol", price: 40 };
+        const input2 = { id: 1003, name: "Lavapistol", price: 40 }
+        addToCart(input1);
+        addToCart(input2);
 
         const itemCountAfter = getCartItemCount();
 
         expect(itemCountAfter).toBe(itemCountBefore + 2);
     });
+
+    test("ökar amount om man lägger till produkt som redan finnes", () => {
+        const input = { id: 1002, name: "Vattenpistol", price: 40 };
+
+        addToCart(input);
+        addToCart(input);
+
+
+
+        expect(getItem(0).amount).toBe(2);
+    });
+
 
     test("omvandlar till godkänt cart-objekt i kundvagnen", () => {
 

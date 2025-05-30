@@ -1,22 +1,11 @@
-/*
-Din uppgift:
-- skriv testfall för alla funktionerna nedan i cart.test.js (RED)
-- skriv kod här för att implementera funktionerna (GREEN)
 
-Tips:
-- börja med att identifiera VAD som ska testas.
-- om du testar t.ex. removeFromCart får du använda addToCart i början av testet. Den kommer nämligen ha sina egna tester
-
-*/
 // function getCartItemCount() KLAR?
 // function getItem(index) <KLAR
 // function getTotalCartValue() klar typ
 // function addToCart(newItem) KLARTPY?
 // function removeFromCart(itemId) KLar
-// function editCart(itemId, newValues)
+// function editCart(itemId, newValues) klar typ
 // function clearCart()Klar
-// -------------------------------------------------- //
-
 import { isCartItem, isProduct } from "./validation.js"
 
 let cart = []
@@ -37,7 +26,8 @@ function getItem(index) {
 }
 
 function getCartItemCount() {
-	return cart.reduce((sum, cartItem) => sum + cartItem.amount, 0)
+	// return cart.reduce((sum, cartItem) => sum + cartItem.amount, 0)
+	return cart.length
 }
 
 function getTotalCartValue() {
@@ -74,6 +64,7 @@ function removeFromCart(itemId) {
 
 function editCart(itemId, newValues) {
 	const cartItem = cart.find(item => item.id === itemId)
+	//LÄgg till iscartitem
 	if (!cartItem || typeof newValues !== "object" || newValues === null) {
 		return false
 	}
