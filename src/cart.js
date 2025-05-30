@@ -1,11 +1,3 @@
-
-// function getCartItemCount() KLAR?
-// function getItem(index) <KLAR
-// function getTotalCartValue() klar typ
-// function addToCart(newItem) KLARTPY?
-// function removeFromCart(itemId) KLar
-// function editCart(itemId, newValues) klar typ
-// function clearCart()Klar
 import { isCartItem, isProduct } from "./validation.js"
 
 let cart = []
@@ -20,9 +12,9 @@ function getItem(index) {
 		index < 0 ||
 		index >= cart.length
 	) {
-		return false
-	} else
-		return cart[index]
+		throw new Error("Invalid cart index")
+	}
+	return cart[index]
 }
 
 function getCartItemCount() {
@@ -54,30 +46,26 @@ function addToCart(newItem) {
 }
 
 function removeFromCart(itemId) {
-	const found = cart.find(item => item.item.id === itemId)
+	const found = cart.find(item => item.id === itemId)
 
 	if (found) {
 
-		cart = cart.filter(item => item.item.id !== itemId)
+		cart = cart.filter(item => item.id !== itemId)
 	} else { return false }
 }
 
 function editCart(itemId, newValues) {
 	const cartItem = cart.find(item => item.id === itemId)
-	//LÄgg till iscartitem
+
 	if (!cartItem || typeof newValues !== "object" || newValues === null) {
-		return false
+		throw new Error("object not found or newValues is not an object")
 	}
 	if (typeof newValues.amount === "number" && newValues.amount > 0) {
 		cartItem.amount = newValues.amount
 
 	} else {
-		return false
+		throw new Error("Amount got to be a number and more than 0")
 	}
-	if (newValues.item && isProduct(newValues.item)) {
-		cartItem.item = newValues.item
-
-	} else { return false }
 
 }
 
